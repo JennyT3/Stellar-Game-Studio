@@ -1,0 +1,150 @@
+@import "tailwindcss/theme";
+@import "tailwindcss/utilities";
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  --font-display: "Space Grotesk", "Segoe UI", sans-serif;
+  --font-body: "Manrope", "Segoe UI", sans-serif;
+  --font-mono: "IBM Plex Mono", "Fira Code", "JetBrains Mono", monospace;
+  --color-bg: #f7f3ea;
+  --color-surface: #ffffff;
+  --color-ink: #1c1b19;
+  --color-ink-muted: #5c5650;
+  --color-accent: #1b8ea5;
+  --color-accent-strong: #0f5c6d;
+  --color-highlight: #ff7a59;
+  --color-border: rgba(28, 27, 25, 0.14);
+  --color-success: #2d9b5a;
+  --color-warning: #c8841c;
+  --color-error: #d14b4b;
+  --color-info: #2c7bb6;
+}
+
+html {
+  color: var(--color-ink);
+  font-family: var(--font-body);
+  background: var(--color-bg);
+}
+
+body {
+  font-family: var(--font-body);
+  font-feature-settings: "rlig" 1, "calt" 1;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  min-height: 100vh;
+  background: var(--color-bg);
+  color: var(--color-ink);
+  line-height: 1.6;
+}
+
+#root {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  font-family: var(--font-display);
+  font-weight: 600;
+}
+
+a {
+  color: var(--color-ink);
+  text-decoration: none;
+}
+
+a:hover {
+  color: var(--color-accent-strong);
+}
+
+::selection {
+  background: var(--color-highlight);
+  color: #fff;
+}
+
+button {
+  padding: 0.7rem 1.4rem;
+  border-radius: 999px;
+  font-weight: 600;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  cursor: pointer;
+  border: 1px solid var(--color-border);
+  background: var(--color-ink);
+  color: #fff;
+  font-size: 0.875rem;
+  letter-spacing: 0.04em;
+}
+
+button:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 12px 20px rgba(28, 27, 25, 0.15);
+}
+
+button:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+.btn-secondary {
+  background: transparent;
+  color: var(--color-ink);
+}
+
+input,
+textarea,
+select {
+  padding: 0.75rem 1rem;
+  border: 1px solid var(--color-border);
+  border-radius: 16px;
+  font-size: 0.9rem;
+  width: 100%;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  background: rgba(255, 255, 255, 0.7);
+  color: var(--color-ink);
+}
+
+input:focus,
+textarea:focus,
+select:focus {
+  outline: none;
+  border-color: var(--color-accent);
+  box-shadow: 0 0 0 3px rgba(27, 142, 165, 0.2);
+}
+
+.card {
+  background: var(--color-surface);
+  border-radius: 24px;
+  padding: 1.8rem;
+  border: 1px solid var(--color-border);
+  box-shadow: 0 20px 40px rgba(28, 27, 25, 0.06);
+}
+
+.notice {
+  padding: 1rem 1.25rem;
+  border-radius: 16px;
+  border: 1px solid var(--color-border);
+  background: rgba(255, 255, 255, 0.8);
+  font-weight: 600;
+}
+
+.notice.error {
+  color: var(--color-error);
+}
+
+.notice.success {
+  color: var(--color-success);
+}
+
+.notice.info {
+  color: var(--color-info);
+}
