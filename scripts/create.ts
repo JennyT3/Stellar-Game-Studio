@@ -308,7 +308,6 @@ export default function App() {
           userAddress={userAddress}
           currentEpoch={1}
           availablePoints={1000000000n}
-          onBack={() => {}}
           onStandingsRefresh={() => {}}
           onGameComplete={() => {}}
         />
