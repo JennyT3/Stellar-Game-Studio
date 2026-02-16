@@ -1,0 +1,6 @@
+[package]
+name = "simple_location_proof"
+type = "bin"
+authors = [""]
+
+[dependencies]

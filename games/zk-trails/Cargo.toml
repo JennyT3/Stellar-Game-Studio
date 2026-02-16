@@ -1,0 +1,23 @@
+[workspace]
+resolver = "2"
+
+members = [
+  "contracts/game-hub",
+  "contracts/mission-manager",
+  "contracts/zk-trails",
+  # "contracts/zk-verifier",  # Temporarily disabled - GitHub dependency not available
+  # "contracts/ultrahonk_soroban_contract",  # Also depends on missing GitHub repo
+]
+
+[workspace.dependencies]
+soroban-sdk = "22.0.0"
+
+[profile.release]
+opt-level = "z"
+overflow-checks = true
+debug = 0
+strip = "symbols"
+debug-assertions = false
+panic = "abort"
+codegen-units = 1
+lto = true
