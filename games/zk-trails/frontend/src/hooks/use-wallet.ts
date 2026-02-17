@@ -8,7 +8,7 @@ import {
 
 const kit = new StellarWalletsKit({
   network: WalletNetwork.TESTNET,
-  selectedWalletId: undefined,
+  selectedWalletId: "" ,
   modules: allowAllModules(),
 });
 
@@ -27,7 +27,7 @@ export function useWallet() {
       await kit.openModal({
         onWalletSelected: async (option: ISupportedWallet) => {
           kit.setWallet(option.id);
-          const { address: addr } = await kit.getAddress();
+          const addr = await kit.getPublicKey();
           setAddress(addr);
           setIsConnected(true);
           localStorage.setItem('stellar-wallet', addr);
