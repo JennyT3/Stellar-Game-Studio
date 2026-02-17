@@ -1,6 +1,6 @@
 import { BarretenbergBackend } from '@noir-lang/backend_barretenberg';
 import { Noir } from '@noir-lang/noir_js';
-import circuit from '../../../circuits/location_proof/target/location_proof.json';
+import circuit from '../../circuits/location_proof.json';
 
 let backend: BarretenbergBackend | null = null;
 let noir: Noir | null = null;
