@@ -58,9 +58,11 @@ export default function Home() {
                   LAUNCH TERMINAL
                 </NeonButton>
               </Link>
-              <NeonButton variant="outline" size="lg" className="w-full sm:w-auto">
-                READ DOCS
-              </NeonButton>
+              <a href="https://github.com/JennyT3/Stellar-Game-Studio" target="_blank" rel="noopener noreferrer">
+                <NeonButton variant="outline" size="lg" className="w-full sm:w-auto">
+                  READ DOCS
+                </NeonButton>
+              </a>
             </div>
           </motion.div>
 
@@ -71,8 +73,6 @@ export default function Home() {
             transition={{ delay: 0.4, duration: 0.8 }}
             className="mt-16 mx-auto max-w-5xl rounded-xl border border-white/10 bg-black/50 backdrop-blur-sm overflow-hidden shadow-2xl"
           >
-             {/* Unsplash Cyberpunk Cityscape */}
-             {/* cyberpunk neon city night futuristic */}
             <div className="aspect-video relative">
               <img 
                 src="https://images.unsplash.com/photo-1555680202-c86f0e12f086?q=80&w=2070&auto=format&fit=crop" 
@@ -81,7 +81,6 @@ export default function Home() {
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent" />
               
-              {/* Overlay UI elements */}
               <div className="absolute bottom-6 left-6 flex items-center gap-4">
                  <div className="flex items-center gap-2 text-primary font-mono text-xs">
                    <div className="w-2 h-2 bg-primary rounded-full animate-ping" />

@@ -89,3 +89,4 @@ nohup.out
 timestamp
 bin/
 proofs/
+backend/.env

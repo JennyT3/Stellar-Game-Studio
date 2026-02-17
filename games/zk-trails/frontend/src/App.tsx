@@ -4,6 +4,8 @@ import { Toaster } from '@/components/ui/toaster';
 import { Header } from '@/components/Header';
 import Home from '@/pages/Home';
 import Dashboard from '@/pages/Dashboard';
+import Profile from '@/pages/Profile';
+import Leaderboard from '@/pages/Leaderboard';
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -23,6 +25,8 @@ function App() {
           <Switch>
             <Route path="/" component={Home} />
             <Route path="/dashboard" component={Dashboard} />
+            <Route path="/profile" component={Profile} />
+            <Route path="/leaderboard" component={Leaderboard} />
           </Switch>
           <Toaster />
         </div>

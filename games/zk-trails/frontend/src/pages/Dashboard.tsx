@@ -40,7 +40,6 @@ export default function Dashboard() {
   if (!isConnected) {
     return (
       <div className="min-h-screen bg-[#0a0a0a] flex items-center justify-center px-4 relative overflow-hidden">
-        {/* Background Effects */}
         <div className="absolute inset-0 z-0">
           <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-[#00ff80]/10 rounded-full blur-[128px] animate-pulse" />
           <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-[#6c1b9e]/10 rounded-full blur-[128px] animate-pulse delay-1000" />
@@ -92,19 +91,17 @@ export default function Dashboard() {
 
   const currentTier = player?.tier || 'ROOKIE';
   const progress = tierProgress[currentTier as keyof typeof tierProgress];
-  const currentScore = player?.score || 0;
+  const currentScore = player?.xp || 0;
   const progressPercent = Math.min((currentScore / progress.max) * 100, 100);
 
   return (
     <div className="min-h-screen bg-[#0a0a0a] relative">
-      {/* Background Effects */}
       <div className="absolute inset-0 z-0 pointer-events-none">
         <div className="absolute top-0 left-1/4 w-96 h-96 bg-[#00ff80]/5 rounded-full blur-[128px]" />
         <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-[#6c1b9e]/5 rounded-full blur-[128px]" />
       </div>
 
       <div className="container mx-auto px-4 py-8 relative z-10">
-        {/* Stats Section */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -159,14 +156,13 @@ export default function Dashboard() {
               </CardHeader>
               <CardContent>
                 <div className="text-3xl font-bold text-white font-display">
-                  {player?.completedMissions?.length || 0} <span className="text-gray-500 text-lg">/ {missions?.length || 0}</span>
+                  {player?.missionsCompleted || 0} <span className="text-gray-500 text-lg">/ {missions?.length || 0}</span>
                 </div>
               </CardContent>
             </Card>
           </motion.div>
         </div>
 
-        {/* Missions Section */}
         <motion.div 
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
@@ -177,7 +173,7 @@ export default function Dashboard() {
         </motion.div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {missions?.map((mission, idx) => (
+          {missions?.map((mission: any, idx: number) => (
             <motion.div
               key={mission.id}
               initial={{ opacity: 0, y: 20 }}
@@ -187,7 +183,7 @@ export default function Dashboard() {
               <MissionCard
                 mission={mission}
                 publicKey={address}
-                isCompleted={player?.completedMissions?.includes(mission.id) || false}
+                isCompleted={false}
               />
             </motion.div>
           ))}

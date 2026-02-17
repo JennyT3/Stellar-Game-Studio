@@ -39,3 +39,15 @@ frontend-template/*.tsbuildinfo
 # OS
 .DS_Store
 Thumbs.db
+games/zk-trails/.env
+games/zk-trails/backend/.env
+games/zk-trails/frontend/.env
+games/zk-trails/frontend/.env.local
+games/zk-trails/frontend/.env.production
+target/
+games/zk-trails/.env
+games/zk-trails/backend/.env
+games/zk-trails/frontend/.env
+games/zk-trails/frontend/.env.local
+games/zk-trails/frontend/.env.production
+target/
