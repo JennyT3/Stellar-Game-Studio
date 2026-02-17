@@ -1,0 +1,26 @@
+[
+  {
+    "id": 0,
+    "name": "Plaza Mayor Explorer",
+    "description": "Prove you reached the historic center of Madrid privately.",
+    "reward": "100 XLM",
+    "range": {
+      "zone_lat_min": 40410000,
+      "zone_lat_max": 40420000,
+      "zone_lon_min": -3710000,
+      "zone_lon_max": -3700000
+    }
+  },
+  {
+    "id": 1,
+    "name": "Sol Square Sentinel",
+    "description": "Verify your presence at Kilometer Zero without revealing GPS.",
+    "reward": "150 XLM",
+    "range": {
+      "zone_lat_min": 40415000,
+      "zone_lat_max": 40418000,
+      "zone_lon_min": -3705000,
+      "zone_lon_max": -3703000
+    }
+  }
+]
