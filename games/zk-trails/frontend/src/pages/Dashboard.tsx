@@ -7,6 +7,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Rocket, Trophy, Zap, Wallet, Loader2 } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import { motion } from 'framer-motion';
+import { useState } from 'react';
 
 const tierProgress = {
   ROOKIE: { next: 'ADVENTURER', max: 500 },
@@ -21,19 +22,19 @@ export default function Dashboard() {
   const { data: player, isLoading: playerLoading } = useUser(address);
   const { toast } = useToast();
 
+  // Track completed missions locally in this session
+  const [completedMissions, setCompletedMissions] = useState<Set<string>>(new Set());
+
+  const handleMissionCompleted = (missionId: string) => {
+    setCompletedMissions(prev => new Set([...prev, missionId]));
+  };
+
   const handleConnect = async () => {
     try {
       await connect();
-      toast({
-        title: "Wallet Connected!",
-        description: "Welcome to ZK-Trails",
-      });
-    } catch (error) {
-      toast({
-        title: "Connection Failed",
-        description: "Please try again",
-        variant: "destructive",
-      });
+      toast({ title: "Wallet Connected!", description: "Welcome to ZK-Trails" });
+    } catch {
+      toast({ title: "Connection Failed", description: "Please try again", variant: "destructive" });
     }
   };
 
@@ -44,8 +45,7 @@ export default function Dashboard() {
           <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-[#00ff80]/10 rounded-full blur-[128px] animate-pulse" />
           <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-[#6c1b9e]/10 rounded-full blur-[128px] animate-pulse delay-1000" />
         </div>
-
-        <motion.div 
+        <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           className="relative z-10 w-full max-w-md"
@@ -59,16 +59,12 @@ export default function Dashboard() {
               <p className="text-[#00ff80]/70 mt-2 font-mono text-sm">Connect wallet to initialize terminal</p>
             </CardHeader>
             <CardContent>
-              <Button 
+              <Button
                 onClick={handleConnect}
                 disabled={isConnecting}
                 className="w-full bg-[#00ff80] hover:bg-[#00cc66] text-black font-bold h-12 text-lg font-display tracking-wider shadow-[0_0_20px_rgba(0,255,128,0.3)] hover:shadow-[0_0_30px_rgba(0,255,128,0.5)] transition-all"
               >
-                {isConnecting ? (
-                  <Loader2 className="h-5 w-5 animate-spin mr-2" />
-                ) : (
-                  <Wallet className="h-5 w-5 mr-2" />
-                )}
+                {isConnecting ? <Loader2 className="h-5 w-5 animate-spin mr-2" /> : <Wallet className="h-5 w-5 mr-2" />}
                 {isConnecting ? 'INITIALIZING...' : 'CONNECT WALLET'}
               </Button>
             </CardContent>
@@ -93,6 +89,7 @@ export default function Dashboard() {
   const progress = tierProgress[currentTier as keyof typeof tierProgress];
   const currentScore = player?.xp || 0;
   const progressPercent = Math.min((currentScore / progress.max) * 100, 100);
+  const totalCompleted = completedMissions.size + (player?.missionsCompleted || 0);
 
   return (
     <div className="min-h-screen bg-[#0a0a0a] relative">
@@ -102,28 +99,24 @@ export default function Dashboard() {
       </div>
 
       <div className="container mx-auto px-4 py-8 relative z-10">
+
+        {/* Stats row */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.1 }}
-          >
+          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }}>
             <Card className="border-[#00ff80]/20 bg-black/50 backdrop-blur-sm hover:border-[#00ff80]/40 transition-colors">
               <CardHeader className="flex flex-row items-center justify-between pb-2">
                 <CardTitle className="text-sm font-medium text-[#00ff80]/70 font-mono">TOTAL SCORE</CardTitle>
                 <Zap className="h-4 w-4 text-[#00ff80]" />
               </CardHeader>
               <CardContent>
-                <div className="text-3xl font-bold text-white font-display">{currentScore.toLocaleString()} <span className="text-[#00ff80] text-lg">XP</span></div>
+                <div className="text-3xl font-bold text-white font-display">
+                  {currentScore.toLocaleString()} <span className="text-[#00ff80] text-lg">XP</span>
+                </div>
               </CardContent>
             </Card>
           </motion.div>
 
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.2 }}
-          >
+          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }}>
             <Card className="border-[#6c1b9e]/20 bg-black/50 backdrop-blur-sm hover:border-[#6c1b9e]/40 transition-colors">
               <CardHeader className="flex flex-row items-center justify-between pb-2">
                 <CardTitle className="text-sm font-medium text-[#6c1b9e]/70 font-mono">CURRENT TIER</CardTitle>
@@ -132,7 +125,7 @@ export default function Dashboard() {
               <CardContent>
                 <div className="text-3xl font-bold text-white font-display mb-2">{currentTier}</div>
                 <div className="w-full bg-gray-800 rounded-full h-2 overflow-hidden">
-                  <div 
+                  <div
                     className="bg-gradient-to-r from-[#00ff80] to-[#6c1b9e] h-full transition-all duration-500"
                     style={{ width: `${progressPercent}%` }}
                   />
@@ -144,11 +137,7 @@ export default function Dashboard() {
             </Card>
           </motion.div>
 
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.3 }}
-          >
+          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.3 }}>
             <Card className="border-[#00ff80]/20 bg-black/50 backdrop-blur-sm hover:border-[#00ff80]/40 transition-colors">
               <CardHeader className="flex flex-row items-center justify-between pb-2">
                 <CardTitle className="text-sm font-medium text-[#00ff80]/70 font-mono">MISSIONS COMPLETED</CardTitle>
@@ -156,22 +145,20 @@ export default function Dashboard() {
               </CardHeader>
               <CardContent>
                 <div className="text-3xl font-bold text-white font-display">
-                  {player?.missionsCompleted || 0} <span className="text-gray-500 text-lg">/ {missions?.length || 0}</span>
+                  {totalCompleted} <span className="text-gray-500 text-lg">/ {missions?.length || 0}</span>
                 </div>
               </CardContent>
             </Card>
           </motion.div>
         </div>
 
-        <motion.div 
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          className="mb-8"
-        >
+        {/* Section title */}
+        <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="mb-8">
           <h2 className="text-3xl font-bold text-white mb-2 font-display">AVAILABLE MISSIONS</h2>
           <p className="text-gray-400 font-mono text-sm">Complete missions to earn XP and climb the ranks</p>
         </motion.div>
 
+        {/* Mission grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {missions?.map((mission: any, idx: number) => (
             <motion.div
@@ -183,11 +170,13 @@ export default function Dashboard() {
               <MissionCard
                 mission={mission}
                 publicKey={address}
-                isCompleted={false}
+                isCompleted={completedMissions.has(mission.id)}
+                onCompleted={handleMissionCompleted}
               />
             </motion.div>
           ))}
         </div>
+
       </div>
     </div>
   );
