@@ -26,7 +26,7 @@ export function useWallet() {
       await kit.openModal({
         onWalletSelected: async (option: ISupportedWallet) => {
           kit.setWallet(option.id);
-          const addr = await kit.getPublicKey();
+          const { address: addr } = await kit.getAddress();
           setAddress(addr);
           setIsConnected(true);
           localStorage.setItem('stellar-wallet', addr);

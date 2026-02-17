@@ -10,10 +10,9 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@creit.tech/stellar-wallets-kit": "^0.8.0",
-    "@noir-lang/noir_js": "^0.19.0",
     "@aztec/bb.js": "^0.19.0",
-    "@stellar/stellar-sdk": "^14.5.0",
+    "@creit.tech/stellar-wallets-kit": "^1.9.5",
+    "@noir-lang/noir_js": "^0.19.0",
     "@radix-ui/react-accordion": "^1.2.0",
     "@radix-ui/react-alert-dialog": "^1.0.5",
     "@radix-ui/react-aspect-ratio": "^1.0.3",
@@ -41,6 +40,7 @@
     "@radix-ui/react-toggle": "^1.0.3",
     "@radix-ui/react-toggle-group": "^1.0.4",
     "@radix-ui/react-tooltip": "^1.0.7",
+    "@stellar/stellar-sdk": "^14.5.0",
     "@tanstack/react-query": "^5.0.0",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.0.0",
