@@ -8,7 +8,7 @@ const USER_KEY = 'user';
 export function useMissionsMap() {
   return useQuery({
     queryKey: [MISSIONS_KEY, 'map'],
-    queryFn: () => api.get<Mission[]>('/missions/map'),
+    queryFn: () => api.get<Mission[]>('/zk/missions'),
     staleTime: 30000,
   });
 }
@@ -16,7 +16,7 @@ export function useMissionsMap() {
 export function useMissionDetail(missionId: string | null) {
   return useQuery({
     queryKey: [MISSIONS_KEY, missionId],
-    queryFn: () => api.get<MissionDetail>(`/missions/${missionId}`),
+    queryFn: () => api.get<MissionDetail>(`/zk/missions`),
     enabled: !!missionId,
   });
 }
@@ -26,7 +26,7 @@ export function useStartMission() {
   
   return useMutation({
     mutationFn: (missionId: string) => 
-      api.post<void>(`/missions/${missionId}/start`, {}),
+      api.post<void>(`/zk/missions`, { missionId }),
     onSuccess: (_, missionId) => {
       queryClient.invalidateQueries({ queryKey: [MISSIONS_KEY, 'map'] });
       queryClient.invalidateQueries({ queryKey: [MISSIONS_KEY, missionId] });
@@ -39,7 +39,13 @@ export function useSubmitProof() {
   
   return useMutation({
     mutationFn: (submission: ProofSubmission) =>
-      api.post<MissionReward>(`/missions/${submission.missionId}/submit`, submission),
+      api.post<MissionReward>(`/zk/generate-proof`, {
+        missionId: submission.missionId,
+        lat: submission.lat,
+        lon: submission.lon,
+        walletAddress: submission.walletAddress,
+        timestamp: submission.timestamp || Math.floor(Date.now() / 1000),
+      }),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: [MISSIONS_KEY, 'map'] });
       queryClient.invalidateQueries({ queryKey: [USER_KEY] });
@@ -50,7 +56,7 @@ export function useSubmitProof() {
 export function useUser() {
   return useQuery({
     queryKey: [USER_KEY],
-    queryFn: () => api.get('/me'),
+    queryFn: () => api.get('/health'),
     staleTime: 60000,
   });
 }
