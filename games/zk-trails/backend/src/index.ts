@@ -12,17 +12,11 @@ app.use(cors());
 app.use(express.json());
 
 app.get('/health', (req, res) => {
-  res.json({ 
-    status: 'OK', 
-    timestamp: new Date().toISOString(),
-    stellar: 'testnet'
-  });
+  res.json({ status: 'OK', timestamp: new Date().toISOString() });
 });
 
 app.use('/api/zk', zkRouter);
 
 app.listen(PORT, () => {
-  console.log(`🚀 Backend running on http://localhost:${PORT}`);
-  console.log(`📡 Stellar Testnet Mode`);
-  console.log(`🎮 ZK-Trails API Ready`);
+  console.log('🚀 Backend running on http://localhost:' + PORT);
 });
