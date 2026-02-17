@@ -8,7 +8,6 @@ import {
 
 const kit = new StellarWalletsKit({
   network: WalletNetwork.TESTNET,
-  selectedWalletId: "" as any,
   modules: allowAllModules(),
 });
 
